@@ -151,6 +151,17 @@ class Momentum {
   changeQuote() {
     momentum.setQuote();
   }
+
+  async getWeather() {
+    let linkWeather = `https://api.openweathermap.org/data/2.5/weather?q=${city.textContent}&lang=en&appid=019f42184eb4b9c9e920f1530096f08c&units=imperial`;
+    const res = await fetch(linkWeather);
+    const data = await res.json();
+
+    weatherIcon.className = 'weather-icon owf';
+    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+    temperature.textContent = `${data.main.temp}°F`;
+    weatherDescription.textContent = data.weather[0].description;
+  }
 }
 
 const showTime = document.getElementById('time'),
@@ -177,6 +188,7 @@ name.addEventListener('blur', momentum.setName);
 focus.addEventListener('keypress', momentum.setFocus);
 focus.addEventListener('blur', momentum.setFocus);
 quoteBtn.addEventListener('click', momentum.changeQuote);
+document.addEventListener('DOMContentLoaded', momentum.getWeather);
 
 momentum.showTime();
 momentum.setBg();
