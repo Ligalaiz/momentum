@@ -58,6 +58,42 @@ class Momentum {
   addZero(val) {
     return (parseInt(val) < 10 ? '0' : '') + val;
   }
+
+  setBg() {
+    let time = new Date(),
+      hours = time.getHours();
+
+    if (hours < 6) {
+      //Morning
+      this.count = 20;
+      this.partOfDay = 'morning';
+      this.greetingPhrase = 'Good morning, ';
+    } else if (hours < 12) {
+      //Day
+      this.count = 21;
+      this.partOfDay = 'day';
+      this.greetingPhrase = 'Good day, ';
+    } else if (hours < 18) {
+      //Evening
+      this.count = 23;
+      this.partOfDay = 'evening';
+      this.greetingPhrase = 'Good evening, ';
+    } else {
+      // Night
+      this.count = 22;
+      this.partOfDay = 'night';
+      this.greetingPhrase = 'Good night, ';
+    }
+
+    let index = this.i % this.count;
+
+    greeting.textContent = `${this.greetingPhrase}`;
+    wrapper.style.backgroundImage = `url('./assets/img/${this.partOfDay}/${
+      index + 1
+    }.jpg')`;
+
+    this.i++;
+  }
 }
 
 const showTime = document.getElementById('time'),
@@ -79,3 +115,4 @@ const showTime = document.getElementById('time'),
 const momentum = new Momentum(linkPhrase);
 
 momentum.showTime();
+momentum.setBg();
