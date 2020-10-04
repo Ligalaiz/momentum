@@ -140,6 +140,13 @@ class Momentum {
       }
     }
   }
+
+  async setQuote() {
+    const res = await fetch(this.linkPhrase);
+    const data = await res.json();
+    quote.textContent = data.quoteText;
+    author.textContent = data.quoteAuthor;
+  }
 }
 
 const showTime = document.getElementById('time'),
@@ -170,3 +177,4 @@ momentum.showTime();
 momentum.setBg();
 momentum.getName();
 momentum.getFocus();
+momentum.setQuote();
