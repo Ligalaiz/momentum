@@ -1,0 +1,135 @@
+@font-face {
+  font-family: 'digital7_mono';
+  src: url('../../assets/fonts/digital7_mono.woff2') format('woff2'),
+    url('../../assets/fonts/digital7_mono.svg#digital7_mono') format('svg');
+}
+:root {
+  font-size: 10px;
+}
+
+body {
+  background-color: grey;
+}
+
+.wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'Arial', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #ffffff;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  overflow: hidden;
+  user-select: none;
+  transition: background-image 1s ease-in-out;
+}
+
+.promo {
+  display: flex;
+  height: 90%;
+  min-height: 330px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.greeting {
+  margin: 0;
+  margin-bottom: 5rem;
+}
+
+.date {
+  font-size: 2rem;
+}
+
+.time {
+  font-family: 'digital7_mono', 'Arial', sans-serif;
+  font-size: 10rem;
+  line-height: 1.1;
+}
+
+.switcherBg {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+
+  background: url('../../assets/icon/reload.svg');
+  background-size: cover;
+  outline: none;
+  transition: all 0.2s linear;
+}
+
+.switcherBg:hover {
+  transform: scale(1.1);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.switcherBg:active {
+  box-shadow: none;
+}
+
+.quote__wrap {
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quote {
+  min-height: 70px;
+
+  font-size: 2rem;
+}
+
+.quote__btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+
+  background: url('../../assets/icon/reload.svg');
+  background-size: contain;
+  outline: none;
+  transition: all 0.2s linear;
+}
+
+.quote__btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.quote__btn:active {
+  box-shadow: none;
+}
+
+.weather {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  
+  text-align: right;
+}
+
+.weather-icon:before {
+  font-size: 5rem;
+}
