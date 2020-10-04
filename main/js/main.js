@@ -162,6 +162,14 @@ class Momentum {
     temperature.textContent = `${data.main.temp}°F`;
     weatherDescription.textContent = data.weather[0].description;
   }
+
+  setCity(e) {
+    if (e.code === 'Enter') {
+      e.preventDefault();
+      momentum.getWeather();
+      city.blur();
+    }
+  }
 }
 
 const showTime = document.getElementById('time'),
@@ -189,6 +197,7 @@ focus.addEventListener('keypress', momentum.setFocus);
 focus.addEventListener('blur', momentum.setFocus);
 quoteBtn.addEventListener('click', momentum.changeQuote);
 document.addEventListener('DOMContentLoaded', momentum.getWeather);
+city.addEventListener('keypress', momentum.setCity);
 
 momentum.showTime();
 momentum.setBg();
