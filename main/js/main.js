@@ -94,6 +94,10 @@ class Momentum {
 
     this.i++;
   }
+
+  changeBg() {
+    momentum.setBg();
+  }
 }
 
 const showTime = document.getElementById('time'),
@@ -113,6 +117,8 @@ const showTime = document.getElementById('time'),
   weatherDescription = document.querySelector('.weather-description');
 
 const momentum = new Momentum(linkPhrase);
+
+switcherBg.addEventListener('click', momentum.changeBg);
 
 momentum.showTime();
 momentum.setBg();
