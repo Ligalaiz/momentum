@@ -147,6 +147,10 @@ class Momentum {
     quote.textContent = data.quoteText;
     author.textContent = data.quoteAuthor;
   }
+
+  changeQuote() {
+    momentum.setQuote();
+  }
 }
 
 const showTime = document.getElementById('time'),
@@ -172,6 +176,7 @@ name.addEventListener('keypress', momentum.setName);
 name.addEventListener('blur', momentum.setName);
 focus.addEventListener('keypress', momentum.setFocus);
 focus.addEventListener('blur', momentum.setFocus);
+quoteBtn.addEventListener('click', momentum.changeQuote);
 
 momentum.showTime();
 momentum.setBg();
