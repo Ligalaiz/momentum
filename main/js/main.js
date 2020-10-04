@@ -116,6 +116,30 @@ class Momentum {
       focus.textContent = localStorage.getItem('focus');
     }
   }
+
+  setName(e) {
+    if (e.type === 'keypress') {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        localStorage.setItem('name', e.target.textContent);
+        name.blur();
+      } else {
+        localStorage.setItem('name', e.target.textContent);
+      }
+    }
+  }
+
+  setFocus(e) {
+    if (e.type === 'keypress') {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        localStorage.setItem('focus', e.target.textContent);
+        focus.blur();
+      } else {
+        localStorage.setItem('focus', e.target.textContent);
+      }
+    }
+  }
 }
 
 const showTime = document.getElementById('time'),
@@ -137,6 +161,10 @@ const showTime = document.getElementById('time'),
 const momentum = new Momentum(linkPhrase);
 
 switcherBg.addEventListener('click', momentum.changeBg);
+name.addEventListener('keypress', momentum.setName);
+name.addEventListener('blur', momentum.setName);
+focus.addEventListener('keypress', momentum.setFocus);
+focus.addEventListener('blur', momentum.setFocus);
 
 momentum.showTime();
 momentum.setBg();
