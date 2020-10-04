@@ -52,6 +52,8 @@ class Momentum {
       minutes
     )}<span>:</span>${momentum.addZero(seconds)} ${amPm}`;
 
+    if (minutes === 0) momentum.setBg();
+
     setTimeout(momentum.showTime, 1000);
   }
 
