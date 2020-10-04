@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Momentum</title>
+
+    <link rel="stylesheet" href="./main/css/normalaize.css" />
+    <link rel="stylesheet" href="./main/css/owfont-regular.min.css" />
+    <link rel="stylesheet" href="./main/css/main.css" />
+  </head>
+  <body>
+    <div class="wrapper" id="wrapper">
+      <button class="switcherBg" id="switcherBg" type="button"></button>
+      <div class="weather">
+        <i class="weather-icon owf"></i>
+        <div class="temperature"></div>
+        <div class="weather-description"></div>
+        <div class="city" contenteditable="true">Minsk</div>
+      </div>
+      <div class="promo">
+        <div class="date" id="date"></div>
+        <time class="time" id="time"></time>
+        <h1 class="greeting">
+          <span id="greeting"></span>
+          <span id="name" contenteditable="true"></span>
+        </h1>
+        <h2>What is Your Focus For Today?</h2>
+        <h2 id="focus" contenteditable="true"></h2>
+      </div>
+      <div class="quote__wrap">
+        <button class="quote__btn" id="quote-btn" type="button"></button>
+        <figure class="quote" id="quote">
+          <blockquote class="quote__phrase"></blockquote>
+          <figcaption class="quote__author"></figcaption>
+        </figure>
+      </div>
+    </div>
+    <script src="./main/js/main.js"></script>
+  </body>
+</html>
