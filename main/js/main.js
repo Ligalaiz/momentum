@@ -161,6 +161,8 @@ class Momentum {
     weatherIcon.classList.add(`owf-${data.weather[0].id}`);
     temperature.textContent = `${data.main.temp}°F`;
     weatherDescription.textContent = data.weather[0].description;
+    humidity.textContent = `humidity: ${data.main.humidity}%`;
+    wind.textContent = `wind: ${data.wind.speed}ft/s`;
   }
 
   setCity(e) {
@@ -186,7 +188,9 @@ const showTime = document.getElementById('time'),
   city = document.querySelector('.city'),
   weatherIcon = document.querySelector('.weather-icon'),
   temperature = document.querySelector('.temperature'),
-  weatherDescription = document.querySelector('.weather-description');
+  weatherDescription = document.querySelector('.weather-description'),
+  humidity = document.querySelector('.weather-humidity'),
+  wind = document.querySelector('.weather-wind');
 
 const momentum = new Momentum(linkPhrase);
 
