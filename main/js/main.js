@@ -100,6 +100,22 @@ class Momentum {
   changeBg() {
     momentum.setBg();
   }
+
+  getName() {
+    if (localStorage.getItem('name') === null) {
+      name.textContent = '[Type Enter]';
+    } else {
+      name.textContent = localStorage.getItem('name');
+    }
+  }
+
+  getFocus() {
+    if (localStorage.getItem('focus') === null) {
+      focus.textContent = '[Type Enter]';
+    } else {
+      focus.textContent = localStorage.getItem('focus');
+    }
+  }
 }
 
 const showTime = document.getElementById('time'),
@@ -124,3 +140,5 @@ switcherBg.addEventListener('click', momentum.changeBg);
 
 momentum.showTime();
 momentum.setBg();
+momentum.getName();
+momentum.getFocus();
