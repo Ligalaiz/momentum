@@ -38,30 +38,51 @@ body {
   transition: background-image 1s ease-in-out;
 }
 
+.city {
+  z-index: 500;
+  position: relative;
+}
+
 .promo {
+  position: relative;
   display: flex;
   height: 90%;
   min-height: 330px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #ffffff;
 
   text-align: center;
 }
 
 .greeting {
+  display: flex;
   margin: 0;
+  line-height: 1;
+}
+
+.greeting__wrapper {
   margin-bottom: 5rem;
+  display: flex;
+}
+.greeting__wrapper,
+.question__wrapper {
+  background: radial-gradient(circle, #00000060 0%, #00000000);
 }
 
 .date {
   font-size: 2rem;
+
+  background: radial-gradient(circle, #00000060 0%, #00000000);
 }
 
 .time {
   font-family: 'digital7_mono', 'Arial', sans-serif;
   font-size: 10rem;
   line-height: 1.1;
+
+  background: radial-gradient(circle, #00000060 0%, #00000000);
 }
 
 .switcherBg {
@@ -77,6 +98,8 @@ body {
   background-size: cover;
   outline: none;
   transition: all 0.2s linear;
+
+  z-index: 500;
 }
 
 .switcherBg:hover {
@@ -99,6 +122,8 @@ body {
   min-height: 70px;
 
   font-size: 2rem;
+
+  background: radial-gradient(circle, #00000060 0%, #00000000);
 }
 
 .quote__btn {
@@ -124,12 +149,83 @@ body {
 
 .weather {
   position: absolute;
-  right: 20px;
-  top: 20px;
-  
+  right: 0;
+  top: 0;
+
+  max-width: 130px;
+  padding: 10px;
+
   text-align: right;
+
+  background: radial-gradient(circle, #00000060 0%, #00000000);
 }
 
 .weather-icon:before {
   font-size: 5rem;
+}
+
+#focus {
+  font-size: 20px;
+}
+
+#name,
+#focus,
+#city {
+  display: flex;
+  min-width: 121px;
+  min-height: 30px;
+  padding-left: 5px;
+  border-radius: 10px;
+
+  text-align: center;
+  color: #ffffff;
+  font-size: 20px;
+
+  background-color: transparent;
+}
+
+#city {
+  text-align: right;
+  width: 115px;
+  min-width: auto;
+}
+
+@media (max-width: 767px) {
+  .switcherBg {
+    width: 25px;
+    height: 25px;
+  }
+  .weather {
+    right: 10px;
+    top: 5px;
+  }
+
+  .promo {
+    transform: translateY(91px);
+  }
+
+  .time {
+    font-size: 57px;
+  }
+
+  .greeting__wrapper {
+    margin-bottom: 0;
+  }
+
+  .quote {
+    padding-left: 10px;
+  }
+
+  .quote__wrap,
+  .question,
+  #name,
+  #focus,
+  #city,
+  #greeting {
+    font-size: 16px;
+  }
+
+  #focus {
+    margin: 0 auto;
+  }
 }

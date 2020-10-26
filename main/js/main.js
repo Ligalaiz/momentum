@@ -5,6 +5,7 @@ class Momentum {
     this.partOfDay = '';
     this.greetingPhrase = '';
     this.linkPhrase = linkPhrase;
+    this.step = this.makeNewListImages();
   }
 
   showTime() {
@@ -52,7 +53,7 @@ class Momentum {
       minutes
     )}<span>:</span>${momentum.addZero(seconds)} ${amPm}`;
 
-    if (minutes === 0) momentum.setBg();
+    if (minutes === 0 && seconds === 0) momentum.setBg();
 
     setTimeout(momentum.showTime, 1000);
   }
@@ -65,17 +66,17 @@ class Momentum {
     let time = new Date(),
       hours = time.getHours();
 
-    if (hours < 6) {
+    if (hours <= 6) {
       //Morning
       this.count = 20;
       this.partOfDay = 'morning';
       this.greetingPhrase = 'Good morning, ';
-    } else if (hours < 12) {
+    } else if (hours <= 12) {
       //Day
       this.count = 21;
       this.partOfDay = 'day';
       this.greetingPhrase = 'Good day, ';
-    } else if (hours < 18) {
+    } else if (hours <= 18) {
       //Evening
       this.count = 23;
       this.partOfDay = 'evening';
@@ -87,7 +88,7 @@ class Momentum {
       this.greetingPhrase = 'Good night, ';
     }
 
-    let index = this.i % this.count;
+    let index = (this.i + this.step) % this.count;
 
     greeting.textContent = `${this.greetingPhrase}`;
     wrapper.style.backgroundImage = `url('./assets/img/${this.partOfDay}/${
@@ -101,51 +102,72 @@ class Momentum {
     momentum.setBg();
   }
 
-  getName() {
-    if (localStorage.getItem('name') === null) {
-      name.textContent = '[Type Enter]';
-    } else {
-      name.textContent = localStorage.getItem('name');
-    }
-  }
-
-  getFocus() {
-    if (localStorage.getItem('focus') === null) {
-      focus.textContent = '[Type Enter]';
-    } else {
-      focus.textContent = localStorage.getItem('focus');
-    }
-  }
-
-  setName(e) {
-    if (e.type === 'keypress') {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        localStorage.setItem('name', e.target.textContent);
-        name.blur();
+  initValue() {
+    let objValue = { name, focus, city };
+    for (let key in objValue) {
+      if (localStorage.getItem(`${key}`) === null) {
+        localStorage.setItem(
+          `${key}`,
+          `${key === 'city' ? 'Minsk' : '[Type Enter]'}`
+        );
+        objValue[key].value = localStorage.getItem(key);
       } else {
-        localStorage.setItem('name', e.target.textContent);
+        objValue[key].value = localStorage.getItem(key);
       }
     }
   }
 
-  setFocus(e) {
+  getValue(e) {
+    if (localStorage.getItem(`${e.target.getAttribute('id')}`) === null) {
+      localStorage.setItem(`${e.target.getAttribute('id')}`, '[Type Enter]');
+      [`${e.target.getAttribute('id')}`].value = localStorage.getItem(
+        `${e.target.getAttribute('id')}`
+      );
+    } else {
+      [`${e.target.getAttribute('id')}`].textContent = localStorage.getItem(
+        `${e.target.getAttribute('id')}`
+      );
+    }
+  }
+
+  checkFullField(e) {
+    e.target.value = '';
+  }
+
+  makeNewListImages() {
+    return Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+  }
+
+  setValue(e) {
     if (e.type === 'keypress') {
-      if (e.keyCode === 13) {
+      if (e.code === 'Enter') {
         e.preventDefault();
-        localStorage.setItem('focus', e.target.textContent);
-        focus.blur();
+        if (e.target.value === '') {
+          e.target.blur();
+          return;
+        }
+        localStorage.setItem(`${e.target.getAttribute('id')}`, e.target.value);
+        e.target.blur();
       } else {
-        localStorage.setItem('focus', e.target.textContent);
+        localStorage.setItem(`${e.target.getAttribute('id')}`, e.target.value);
       }
     }
+    if (e.target.value === '')
+      e.target.value = localStorage.getItem(`${e.target.getAttribute('id')}`);
   }
 
   async setQuote() {
-    const res = await fetch(this.linkPhrase);
-    const data = await res.json();
-    quote.textContent = data.quoteText;
-    author.textContent = data.quoteAuthor;
+    try {
+      const res = await fetch(this.linkPhrase);
+      if (!res.ok) {
+        throw Error(res.statusText);
+      }
+      const data = await res.json();
+      quote.textContent = data.quoteText;
+      author.textContent = data.quoteAuthor;
+    } catch (err) {
+      console.log(`name: ${err.name} "message" ${err.message}`);
+    }
   }
 
   changeQuote() {
@@ -153,24 +175,33 @@ class Momentum {
   }
 
   async getWeather() {
-    let linkWeather = `https://api.openweathermap.org/data/2.5/weather?q=${city.textContent}&lang=en&appid=019f42184eb4b9c9e920f1530096f08c&units=imperial`;
-    const res = await fetch(linkWeather);
-    const data = await res.json();
+    let linkWeather = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=en&appid=019f42184eb4b9c9e920f1530096f08c&units=imperial`;
+    try {
+      const res = await fetch(linkWeather);
+      if (!res.ok) {
+        throw Error(res.statusText);
+      }
+      const data = await res.json();
 
-    weatherIcon.className = 'weather-icon owf';
-    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
-    temperature.textContent = `${data.main.temp}°F`;
-    weatherDescription.textContent = data.weather[0].description;
-    humidity.textContent = `humidity: ${data.main.humidity}%`;
-    wind.textContent = `wind: ${data.wind.speed}ft/s`;
+      weatherIcon.className = 'weather-icon owf';
+      weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+      temperature.textContent = `${data.main.temp}°F`;
+      weatherDescription.textContent = data.weather[0].description;
+      humidity.textContent = `humidity: ${data.main.humidity}%`;
+      wind.textContent = `wind: ${data.wind.speed}ft/s`;
+    } catch (err) {
+      console.log(`name: ${err.name} "message" ${err.message}`);
+      city.value = `${err.message}`;
+    }
   }
 
-  setCity(e) {
-    if (e.code === 'Enter') {
-      e.preventDefault();
-      momentum.getWeather();
-      city.blur();
+  setCityKey(e) {
+    if (e.type === 'keypress' && e.code === 'Enter') {
+      this.getWeather();
     }
+  }
+  setCityBlur() {
+    this.getWeather();
   }
 }
 
@@ -185,7 +216,7 @@ const showTime = document.getElementById('time'),
   author = document.querySelector('.quote__author'),
   quoteBtn = document.getElementById('quote-btn'),
   linkPhrase = `https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en`,
-  city = document.querySelector('.city'),
+  city = document.querySelector('#city'),
   weatherIcon = document.querySelector('.weather-icon'),
   temperature = document.querySelector('.temperature'),
   weatherDescription = document.querySelector('.weather-description'),
@@ -195,16 +226,31 @@ const showTime = document.getElementById('time'),
 const momentum = new Momentum(linkPhrase);
 
 switcherBg.addEventListener('click', momentum.changeBg);
-name.addEventListener('keypress', momentum.setName);
-name.addEventListener('blur', momentum.setName);
-focus.addEventListener('keypress', momentum.setFocus);
-focus.addEventListener('blur', momentum.setFocus);
+
+name.addEventListener('blur', momentum.setValue);
+name.addEventListener('keypress', momentum.setValue);
+name.addEventListener('focus', momentum.checkFullField);
+
+focus.addEventListener('blur', momentum.setValue);
+focus.addEventListener('keypress', momentum.setValue);
+focus.addEventListener('focus', momentum.checkFullField);
+
 quoteBtn.addEventListener('click', momentum.changeQuote);
 document.addEventListener('DOMContentLoaded', momentum.getWeather);
-city.addEventListener('keypress', momentum.setCity);
 
-momentum.showTime();
+city.addEventListener('blur', (e) => {
+  momentum.setValue(e);
+  momentum.setCityBlur();
+});
+
+city.addEventListener('keypress', (e) => {
+  momentum.setValue(e);
+  momentum.setCityKey(e);
+});
+
+city.addEventListener('focus', momentum.checkFullField);
+
 momentum.setBg();
-momentum.getName();
-momentum.getFocus();
+momentum.showTime();
 momentum.setQuote();
+momentum.initValue();

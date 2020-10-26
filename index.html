@@ -18,17 +18,21 @@
         <div class="weather-description"></div>
         <div class="weather-humidity"></div>
         <div class="weather-wind"></div>
-        <div class="city" contenteditable="true">Minsk</div>
+        <input class="city" id="city" >
       </div>
       <div class="promo">
         <div class="date" id="date"></div>
         <time class="time" id="time"></time>
-        <h1 class="greeting">
-          <span id="greeting"></span>
-          <span id="name" contenteditable="true"></span>
-        </h1>
-        <h2>What is Your Focus For Today?</h2>
-        <h2 id="focus" contenteditable="true"></h2>
+        <div class="greeting__wrapper">
+          <h1 class="greeting">
+            <span id="greeting"></span>
+          </h1>
+          <input id="name" >
+        </div>
+      <div class="question__wrapper">
+        <h2 class="question">What is Your Focus For Today?</h2>
+        <input id="focus" >
+      </div>
       </div>
       <div class="quote__wrap">
         <button class="quote__btn" id="quote-btn" type="button"></button>
